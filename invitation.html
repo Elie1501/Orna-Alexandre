@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Invitations</title>
+    <style>
+        :root { --gold: #d4b499; --white: #ffffff; --nav-h: 70px; }
+        html { scroll-behavior: smooth; }
+        body, html { margin: 0; padding: 0; background: var(--white); font-family: 'Optima', 'Georgia', serif; }
+
+        /* NAVBAR RESPONSIVE */
+        nav {
+            background: var(--white);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: auto;
+            min-height: var(--nav-h);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #f0f0f0;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* SECTIONS SANS ESPACE */
+        section {
+            width: 100%;
+            line-height: 0;
+            display: flex;
+            justify-content: center;
+            background: #fff;
+        }
+        #mairie { padding-top: 80px; } /* Ajustement pour la navbar */
+
+        .img-full {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            display: block;
+        }
+
+        /* RSVP RESPONSIVE */
+        #rsvp {
+            line-height: normal;
+            padding: 60px 15px;
+            background: #fafafa;
+            display: flex;
+            justify-content: center;
+        }
+        .rsvp-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 450px;
+            box-sizing: border-box;
+        }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .events-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background: #fdfdfd;
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* AJUSTEMENTS MOBILE */
+        @media (max-width: 480px) {
+            nav ul { gap: 8px; }
+            nav ul li a { font-size: 0.65rem; letter-spacing: 0.5px; }
+            .events-grid { grid-template-columns: 1fr; }
+            #mairie { padding-top: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="#mairie">MAIRIE</a></li>
+        <li><a href="#henne">HENNÉ</a></li>
+        <li><a href="#houppa">HOUPPA</a></li>
+        <li><a href="#chabbat">CHABBAT HATAN</a></li>
+        <li><a href="#infos">INFOS</a></li>
+        <li><a href="#rsvp">RSVP</a></li>
+    </ul>
+</nav>
+
+<section id="mairie"><img src="mairie1.png" class="img-full" alt="Mairie"></section>
+<section id="henne"><img src="henne1.png" class="img-full" alt="Henné"></section>
+<section id="houppa"><img src="houppa1.png" class="img-full" alt="Houppa"></section>
+<section id="chabbat"><img src="chabhat1.png" class="img-full" alt="Chabbat"></section>
+<section id="infos"><img src="info1.04.33.png" class="img-full" alt="Infos"></section>
+
+<section id="rsvp">
+    <div class="rsvp-card">
+        <h2 style="text-align:center; color:var(--gold); letter-spacing:2px; font-weight:300; text-transform:uppercase;">RSVP</h2>
+        <form action="mailto:eliechicha1@icloud.com" method="post" enctype="text/plain">
+            <div class="form-group">
+                <label>Nom de famille</label>
+                <input type="text" name="Nom" required>
+            </div>
+            <div class="form-group">
+                <label>Nombre de personnes</label>
+                <input type="number" name="Nombre" min="1" value="1">
+            </div>
+            <div class="form-group">
+                <label>Évènements :</label>
+                <div class="events-grid">
+                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Mairie" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Mairie</span></div>
+                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Henne" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Henné</span></div>
+                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Houppa" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Houppa</span></div>
+                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Chabbat" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Chabbat</span></div>
+                </div>
+            </div>
+            <button type="submit" class="btn">Confirmer</button>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

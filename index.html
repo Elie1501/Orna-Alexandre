@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariage</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            background-color: #ffffff; /* Fond blanc pur */
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            perspective: 2000px;
+        }
+
+        /* Le conteneur qui sert de pivot */
+        .book-cover {
+            width: 100%;
+            max-width: 350px; /* Taille de ton sceau */
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transform-origin: left center; /* Charnière à gauche */
+            transition: transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .sceau-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            backface-visibility: hidden;
+        }
+
+        /* L'effet de la page qui tourne */
+        .page-turn-active {
+            transform: rotateY(-140deg);
+        }
+    </style>
+</head>
+<body>
+
+<div class="book-cover" id="cover">
+    <img src="sceau1.png" class="sceau-img" alt="Sceau Royal">
+</div>
+
+<script>
+    const cover = document.getElementById('cover');
+
+    cover.addEventListener('click', function() {
+        // Déclenche l'animation
+        this.classList.add('page-turn-active');
+
+        // Redirection après l'ouverture (1.2 seconde)
+        setTimeout(() => {
+            window.location.href = "invitation.html";
+        }, 1200);
+    });
+</script>
+
+</body>
+</html>
