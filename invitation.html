@@ -140,26 +140,160 @@
 
 <section id="rsvp">
     <div class="rsvp-card">
-        <h2 style="text-align:center; color:var(--gold); letter-spacing:2px; font-weight:300; text-transform:uppercase;">RSVP</h2>
+        <h2 style="text-align:center; color:var(--gold); letter-spacing:3px; font-weight:300; text-transform:uppercase; margin-bottom: 25px;">RSVP</h2>
+
         <form action="mailto:eliechicha1@icloud.com" method="post" enctype="text/plain">
             <div class="form-group">
-                <label>Nom de famille</label>
-                <input type="text" name="Nom" required>
+                <label style="font-size: 0.8rem; letter-spacing: 1px;">NOM DE FAMILLE</label>
+                <input type="text" name="Nom_Famille" placeholder="Ex: Famille Levy" required>
             </div>
-            <div class="form-group">
-                <label>Nombre de personnes</label>
-                <input type="number" name="Nombre" min="1" value="1">
-            </div>
-            <div class="form-group">
-                <label>Évènements :</label>
-                <div class="events-grid">
-                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Mairie" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Mairie</span></div>
-                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Henne" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Henné</span></div>
-                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Houppa" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Houppa</span></div>
-                    <div style="display:flex; align-items:center;"><input type="checkbox" name="Chabbat" style="width:auto; margin-right:8px;"> <span style="font-size:0.85rem;">Chabbat</span></div>
+
+            <style>
+                /* BASE & CONTAINERS */
+                .event-container {
+                    margin-bottom: 12px;
+                    border: 1px solid #f0f0f0;
+                    border-radius: 12px;
+                    padding: 12px;
+                    background: #fff;
+                    transition: border-color 0.3s ease;
+                }
+
+                .event-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .event-name {
+                    font-weight: bold;
+                    color: var(--gold);
+                    text-transform: uppercase;
+                    font-size: 0.75rem;
+                    letter-spacing: 1px;
+                    flex-shrink: 0; /* Empêche le nom d'être écrasé */
+                }
+
+                /* BOUTONS RADIO TYPE TABS */
+                .radio-group {
+                    display: flex;
+                    background: #f8f8f8;
+                    border-radius: 8px;
+                    padding: 2px;
+                    border: 1px solid #eee;
+                    min-width: 150px; /* Assure une taille stable sur mobile */
+                }
+
+                .radio-group label {
+                    margin: 0;
+                    padding: 8px 10px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 0.65rem;
+                    transition: 0.3s;
+                    flex: 1;
+                    text-align: center;
+                    font-weight: 700;
+                    color: #999;
+                    white-space: nowrap;
+                }
+
+                .radio-group input { display: none; }
+                .radio-group label:has(input:checked) { background: var(--gold); color: white; }
+
+                /* QUANTITÉ DYNAMIQUE */
+                .qty-selection {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: all 0.4s ease;
+                    opacity: 0;
+                }
+
+                .event-container:has(input[value="Présent"]:checked) { border-color: var(--gold); background: #fffefa; }
+                .event-container:has(input[value="Présent"]:checked) .qty-selection {
+                    max-height: 80px;
+                    opacity: 1;
+                    margin-top: 12px;
+                    padding-top: 12px;
+                    border-top: 1px dashed #eee;
+                }
+
+                .qty-input {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                .qty-input label { font-size: 0.75rem; color: #666; font-weight: 500; margin: 0; }
+                .qty-input input {
+                    border: 1px solid #ddd;
+                    padding: 6px;
+                    border-radius: 6px;
+                    width: 50px;
+                    text-align: center;
+                    font-size: 0.9rem;
+                }
+
+                /* --- AJUSTEMENTS RESPONSIVE --- */
+                @media (max-width: 400px) {
+                    .event-header {
+                        flex-direction: column; /* On passe l'un sous l'autre sur les très petits écrans */
+                        align-items: flex-start;
+                    }
+                    .radio-group {
+                        width: 100%;
+                        margin-top: 8px;
+                    }
+                    .event-name { font-size: 0.7rem; }
+                    .rsvp-card { padding: 15px; }
+                }
+            </style>
+
+            <div class="event-container">
+                <div class="event-header">
+                    <span class="event-name">Mairie</span>
+                    <div class="radio-group">
+                        <label><input type="radio" name="Mairie_Statut" value="Présent"> Présent</label>
+                        <label><input type="radio" name="Mairie_Statut" value="Absent" checked> Absent</label>
+                    </div>
                 </div>
+                <div class="qty-selection"><div class="qty-input"><label>Nombre d'adultes</label><input type="number" name="Mairie_Adultes" min="1" value="1"></div></div>
             </div>
-            <button type="submit" class="btn">Confirmer</button>
+
+            <div class="event-container">
+                <div class="event-header">
+                    <span class="event-name">Henné</span>
+                    <div class="radio-group">
+                        <label><input type="radio" name="Henne_Statut" value="Présent"> Présent</label>
+                        <label><input type="radio" name="Henne_Statut" value="Absent" checked> Absent</label>
+                    </div>
+                </div>
+                <div class="qty-selection"><div class="qty-input"><label>Nombre d'adultes</label><input type="number" name="Henne_Adultes" min="1" value="1"></div></div>
+            </div>
+
+            <div class="event-container">
+                <div class="event-header">
+                    <span class="event-name">Houppa</span>
+                    <div class="radio-group">
+                        <label><input type="radio" name="Houppa_Statut" value="Présent"> Présent</label>
+                        <label><input type="radio" name="Houppa_Statut" value="Absent" checked> Absent</label>
+                    </div>
+                </div>
+                <div class="qty-selection"><div class="qty-input"><label>Nombre d'adultes</label><input type="number" name="Houppa_Adultes" min="1" value="1"></div></div>
+            </div>
+
+            <div class="event-container">
+                <div class="event-header">
+                    <span class="event-name">Chabbat Hatan</span>
+                    <div class="radio-group">
+                        <label><input type="radio" name="Chabbat_Statut" value="Présent"> Présent</label>
+                        <label><input type="radio" name="Chabbat_Statut" value="Absent" checked> Absent</label>
+                    </div>
+                </div>
+                <div class="qty-selection"><div class="qty-input"><label>Nombre d'adultes</label><input type="number" name="Chabbat_Adultes" min="1" value="1"></div></div>
+            </div>
+
+            <button type="submit" class="btn" style="margin-top: 20px;">Envoyer ma réponse</button>
         </form>
     </div>
 </section>
