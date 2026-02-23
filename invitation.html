@@ -51,7 +51,7 @@
             justify-content: center;
             background: #fff;
         }
-        #mairie { padding-top: 80px; } /* Ajustement pour la navbar */
+        #mairie { padding-top: 80px; }
 
         .img-full {
             width: 100%;
@@ -87,15 +87,7 @@
             box-sizing: border-box;
             font-size: 1rem;
         }
-        .events-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            background: #fdfdfd;
-            padding: 12px;
-            border: 1px solid #eee;
-            border-radius: 4px;
-        }
+
         .btn {
             background: var(--gold);
             color: white;
@@ -110,12 +102,64 @@
             letter-spacing: 1px;
         }
 
+        /* FORMULAIRE EVENTS STYLES */
+        .event-container {
+            margin-bottom: 12px;
+            border: 1px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 12px;
+            background: #fff;
+            transition: border-color 0.3s ease;
+        }
+        .event-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .event-name { font-weight: bold; color: var(--gold); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+
+        .radio-group { display: flex; background: #f8f8f8; border-radius: 8px; padding: 2px; border: 1px solid #eee; min-width: 150px; }
+        .radio-group label { margin: 0; padding: 8px 10px; border-radius: 6px; cursor: pointer; font-size: 0.65rem; flex: 1; text-align: center; font-weight: 700; color: #999; white-space: nowrap; }
+        .radio-group input { display: none; }
+        .radio-group label:has(input:checked) { background: var(--gold); color: white; }
+
+        .qty-selection { max-height: 0; overflow: hidden; transition: all 0.4s ease; opacity: 0; }
+        .event-container:has(input[value="Présent"]:checked) { border-color: var(--gold); background: #fffefa; }
+        .event-container:has(input[value="Présent"]:checked) .qty-selection { max-height: 80px; opacity: 1; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #eee; }
+
+        .qty-input { display: flex; align-items: center; justify-content: space-between; }
+        .qty-input label { font-size: 0.75rem; color: #666; font-weight: 500; margin: 0; }
+        .qty-input input { border: 1px solid #ddd; padding: 6px; border-radius: 6px; width: 50px; text-align: center; font-size: 0.9rem; }
+
+        /* LECTEUR AUDIO FLOTTANT */
+        .audio-control {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            z-index: 2000;
+            background: var(--white);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .audio-icon { fill: var(--gold); width: 22px; height: 22px; }
+        .playing { animation: pulse-gold 2s infinite; }
+
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 180, 153, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 180, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 180, 153, 0); }
+        }
+
         /* AJUSTEMENTS MOBILE */
         @media (max-width: 480px) {
             nav ul { gap: 8px; }
-            nav ul li a { font-size: 0.65rem; letter-spacing: 0.5px; }
-            .events-grid { grid-template-columns: 1fr; }
+            nav ul li a { font-size: 0.65rem; }
             #mairie { padding-top: 100px; }
+            .event-header { flex-direction: column; align-items: flex-start; }
+            .radio-group { width: 100%; margin-top: 8px; }
         }
     </style>
 </head>
@@ -147,107 +191,6 @@
                 <label style="font-size: 0.8rem; letter-spacing: 1px;">NOM DE FAMILLE</label>
                 <input type="text" name="Nom_Famille" placeholder="Ex: Famille Levy" required>
             </div>
-
-            <style>
-                /* BASE & CONTAINERS */
-                .event-container {
-                    margin-bottom: 12px;
-                    border: 1px solid #f0f0f0;
-                    border-radius: 12px;
-                    padding: 12px;
-                    background: #fff;
-                    transition: border-color 0.3s ease;
-                }
-
-                .event-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 10px;
-                }
-
-                .event-name {
-                    font-weight: bold;
-                    color: var(--gold);
-                    text-transform: uppercase;
-                    font-size: 0.75rem;
-                    letter-spacing: 1px;
-                    flex-shrink: 0; /* Empêche le nom d'être écrasé */
-                }
-
-                /* BOUTONS RADIO TYPE TABS */
-                .radio-group {
-                    display: flex;
-                    background: #f8f8f8;
-                    border-radius: 8px;
-                    padding: 2px;
-                    border: 1px solid #eee;
-                    min-width: 150px; /* Assure une taille stable sur mobile */
-                }
-
-                .radio-group label {
-                    margin: 0;
-                    padding: 8px 10px;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    font-size: 0.65rem;
-                    transition: 0.3s;
-                    flex: 1;
-                    text-align: center;
-                    font-weight: 700;
-                    color: #999;
-                    white-space: nowrap;
-                }
-
-                .radio-group input { display: none; }
-                .radio-group label:has(input:checked) { background: var(--gold); color: white; }
-
-                /* QUANTITÉ DYNAMIQUE */
-                .qty-selection {
-                    max-height: 0;
-                    overflow: hidden;
-                    transition: all 0.4s ease;
-                    opacity: 0;
-                }
-
-                .event-container:has(input[value="Présent"]:checked) { border-color: var(--gold); background: #fffefa; }
-                .event-container:has(input[value="Présent"]:checked) .qty-selection {
-                    max-height: 80px;
-                    opacity: 1;
-                    margin-top: 12px;
-                    padding-top: 12px;
-                    border-top: 1px dashed #eee;
-                }
-
-                .qty-input {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
-                .qty-input label { font-size: 0.75rem; color: #666; font-weight: 500; margin: 0; }
-                .qty-input input {
-                    border: 1px solid #ddd;
-                    padding: 6px;
-                    border-radius: 6px;
-                    width: 50px;
-                    text-align: center;
-                    font-size: 0.9rem;
-                }
-
-                /* --- AJUSTEMENTS RESPONSIVE --- */
-                @media (max-width: 400px) {
-                    .event-header {
-                        flex-direction: column; /* On passe l'un sous l'autre sur les très petits écrans */
-                        align-items: flex-start;
-                    }
-                    .radio-group {
-                        width: 100%;
-                        margin-top: 8px;
-                    }
-                    .event-name { font-size: 0.7rem; }
-                    .rsvp-card { padding: 15px; }
-                }
-            </style>
 
             <div class="event-container">
                 <div class="event-header">
@@ -297,6 +240,45 @@
         </form>
     </div>
 </section>
+
+<div id="musicToggle" class="audio-control">
+    <svg id="musicIcon" class="audio-icon" viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+    </svg>
+</div>
+
+<audio id="backgroundAudio" src="2025.mp3" preload="auto" loop></audio>
+
+<script>
+    const audio = document.getElementById('backgroundAudio');
+    const btn = document.getElementById('musicToggle');
+    let isStarted = false;
+
+    const startAudio = () => {
+        if (!isStarted) {
+            audio.play().then(() => {
+                isStarted = true;
+                btn.classList.add('playing');
+                window.removeEventListener('scroll', startAudio);
+                document.body.removeEventListener('click', startAudio);
+            }).catch(() => {});
+        }
+    };
+
+    window.addEventListener('scroll', startAudio, { passive: true });
+    document.body.addEventListener('click', startAudio, { once: true });
+
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (audio.paused) {
+            audio.play();
+            btn.classList.add('playing');
+        } else {
+            audio.pause();
+            btn.classList.remove('playing');
+        }
+    });
+</script>
 
 </body>
 </html>
